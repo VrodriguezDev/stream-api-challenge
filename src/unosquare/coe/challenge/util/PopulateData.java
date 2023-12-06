@@ -35,6 +35,7 @@ public class PopulateData {
         products.add(new Product("1016","Black Wristband","Under Armor","70","137"));
         products.add(new Product("1009","Black Head band","Nike","50","0"));
         products.add(new Product("1019","Black Head band","Under Armor","40","0"));
+        products.add(new Product("1014","Black Head band","Under Armor","45","6"));
     }
 
     private static void generateOrdersProducts(List<List<String>> orderProducts){
