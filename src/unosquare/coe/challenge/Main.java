@@ -5,9 +5,7 @@ import unosquare.coe.challenge.model.Order;
 import unosquare.coe.challenge.model.Product;
 import unosquare.coe.challenge.util.PopulateData;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -85,17 +83,16 @@ public class Main {
 //        /* Challenge #5
 //            Get the total money spent by customer ordered by CustomerId
 //         */
-//
-        //try using a linkedHashMap
-        Stream<LinkedHashMap<String, Integer>> linkedHashMapStream = orders.stream().map(o -> orderproducts.stream()
-                .filter(op -> op.get(0).equals(o.getOrder().get(0)))
-                .map(op -> products.stream()
-                        .filter(p -> p.getProduct().get(0).equals(op.get(1)))
-                        .findFirst().orElseThrow())
-                .map(p -> Integer.parseInt(p.getProduct().get(3)))
-                .collect(Collectors.toMap(p -> o.getOrder().get(1), Function.identity(), Integer::sum, LinkedHashMap::new)));
 
-        linkedHashMapStream.toList().forEach(e -> e.forEach((s, i) -> System.out.println(s + ", " + i)));
+        orders.stream()
+                .collect(Collectors.toMap(o -> o.getOrder().get(1), o ->
+                                orderproducts.stream().filter(op -> op.get(0).equals(o.getOrder().get(0)))
+                                        .map(op -> products.stream()
+                                                .filter(p -> p.getProduct().get(0).equals(op.get(1)))
+                                                .findFirst().orElseThrow())
+                                        .mapToInt(p -> Integer.parseInt(p.getProduct().get(3)))
+                                        .sum()
+                        , Integer::sum, LinkedHashMap::new)).forEach((s, i) -> System.out.println(s + ", " + i));
 
 //
 //
